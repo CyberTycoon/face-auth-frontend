@@ -43,9 +43,13 @@ export default function WebcamVerifier({ apiUrl }: { apiUrl: string }) {
                 setStatus("error");
                 setMessage(j.detail ?? j.message ?? "Unknown error");
             }
-        } catch (err: any) {
+        } catch (err) {
             setStatus("error");
-            setMessage(err.message || "Capture failed");
+            if (err instanceof Error) {
+                setMessage(err.message || "Capture failed");
+            } else {
+                setMessage("An unknown error occurred during capture.");
+            }
         }
     };
 
